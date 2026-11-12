@@ -1,0 +1,51 @@
+[
+  {
+    "naam": "Groepslessen",
+    "uitleg": "Onbeperkt meetrainen of losse credits — binnen en buiten.",
+    "beeld": "/foto/groep-plein.webp",
+    "producten": [
+      {
+        "naam": "Onbeperkt abonnement",
+        "omschrijving": "Onbeperkt meetrainen met alle groepslessen, per vier weken opzegbaar.",
+        "prijs": 48,
+        "link": "https://fitstudiosayan.virtuagym.com/webshop/product?id=3e9309380e11d2054be9588fcebf3c50483e&club=WkpTbFZ2ZnI0eVdsb2Q5a0hxOXh0UT09&embedded=1",
+        "beeld": "/foto/groep-plein.webp"
+      },
+      {
+        "naam": "10x Workout Credits",
+        "omschrijving": "10x Workout credit voor binnen en buiten.",
+        "prijs": 70,
+        "link": "https://fitstudiosayan.virtuagym.com/webshop/product?id=43fda465ecc3b653dfdd1c99be049e45c9e9&club=WkpTbFZ2ZnI0eVdsb2Q5a0hxOXh0UT09&embedded=1",
+        "beeld": "/foto/studio/studio-roeien.webp"
+      }
+    ]
+  },
+  {
+    "naam": "Personal training",
+    "uitleg": "Sessies van 45 minuten, één op één, waar en wanneer het jou uitkomt.",
+    "beeld": "/foto/squat-buiten.webp",
+    "producten": [
+      {
+        "naam": "PT45 1x per week",
+        "omschrijving": "1 x per week personal training van 45 minuten. Op maat gemaakte trainingen waar en wanneer het jouw uitkomt. Inclusief alle groepslessen.",
+        "prijs": 195,
+        "link": "https://fitstudiosayan.virtuagym.com/webshop/product?id=59f3f47732ec72e1af55d3f256642bd51a0a&club=WkpTbFZ2ZnI0eVdsb2Q5a0hxOXh0UT09&embedded=1",
+        "beeld": "/foto/squat-buiten.webp"
+      },
+      {
+        "naam": "PT45 2 x per week",
+        "omschrijving": "2 x per week personal training van 45 minuten. Op maat gemaakte trainingen waar en wanneer het jou uitkomt. Inclusief alle groepslessen.",
+        "prijs": 390,
+        "link": "https://fitstudiosayan.virtuagym.com/webshop/product?id=3b7ffa5230c0831bc9e9496359c0d5d9d6a1&club=WkpTbFZ2ZnI0eVdsb2Q5a0hxOXh0UT09&embedded=1",
+        "beeld": "/foto/squat-buiten.webp"
+      },
+      {
+        "naam": "PT45 3 x per week",
+        "omschrijving": "3 x per week personal training van 45 minuten. Op maat gemaakte trainingen waar en wanneer het jou uitkomt.",
+        "prijs": 555,
+        "link": "https://fitstudiosayan.virtuagym.com/webshop/product?id=c0328c4cf37df6d7d6175f95163c0e1df0b4&club=WkpTbFZ2ZnI0eVdsb2Q5a0hxOXh0UT09&embedded=1",
+        "beeld": "/foto/squat-buiten.webp"
+      }
+    ]
+  }
+]

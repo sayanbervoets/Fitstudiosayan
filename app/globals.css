@@ -1,0 +1,821 @@
+/* Kleuren komen van zijn eigen huisstijl: het logo en de belettering op de
+   Sportwagen zijn donkerblauw met limoengroen. Een eigen accentkleur bedenken
+   zou de site laten vloeken met zijn drukwerk en met elke foto. */
+:root {
+  --zand: #f4f6f2;
+  --wit: #ffffff;
+  --inkt: #16305c;
+  --nacht: #101f3d;
+  --grijs: #5c6674;
+  --vuur: #96b81c;
+  --vuur-diep: #7d9c11;
+  /* Limoen als tekst op een lichte achtergrond haalt maar 2,3 contrast en is
+     dan niet te lezen. Deze donkere variant is voor tekst; --vuur blijft voor
+     vlakken, knoppen en accenten. */
+  --vuur-tekst: #566f0a;
+  --lijn: #dfe4e9;
+  --rond: 22px;
+  --rond-klein: 12px;
+  --schaduw: 0 18px 50px -22px rgba(22, 19, 15, .35);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--zand);
+  color: var(--inkt);
+  font-family: Sora, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; }
+
+h1, h2, h3 {
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  font-weight: 800;
+  margin: 0 0 .5em;
+  text-wrap: balance;
+}
+/* Zijn logo en zijn flyer zetten alles in vette schuine kapitalen. Die taal
+   trekken we door in de koppen, anders staat het drukwerk los van de site. */
+h1, h2 { font-style: italic; text-transform: uppercase; letter-spacing: -.02em; }
+h1 { font-weight: 800; }
+h1 { font-size: clamp(2.4rem, 7vw, 4.6rem); }
+h2 { font-size: clamp(1.8rem, 4.4vw, 2.9rem); }
+h3 { font-size: 1.2rem; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+
+.omhulsel { width: min(1180px, 100% - 2.5rem); margin-inline: auto; }
+.vlak { padding: clamp(3.5rem, 9vw, 6.5rem) 0; }
+.vlak-wit { background: var(--wit); }
+
+/* ---- knoppen ---- */
+.knop {
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: 1rem 1.7rem; border-radius: 100px;
+  font-weight: 700; font-size: 1rem; text-decoration: none;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.knop:hover { transform: translateY(-2px); }
+.knop-vuur { background: var(--vuur); color: #10240f; box-shadow: 0 10px 26px -10px rgba(150, 184, 28, .85); }
+.knop-vuur:hover { background: var(--vuur-diep); color: #fff; }
+.knop-rand { border-color: currentColor; }
+.knop-licht { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.45); }
+
+.label {
+  display: inline-block; font-size: .78rem; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--vuur-tekst);
+  margin-bottom: 1rem;
+}
+/* Op een donkere ondergrond mag het felle limoen wel. */
+.reviews .label, .sportwagen .label, .hero .label, .video-blok .label, .voet .label { color: var(--vuur); }
+
+/* ---- kop ---- */
+.balk {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+/* De hero begint onder de balk door; elke andere pagina krijgt gewoon ruimte. */
+main > section:first-child:not(.hero) { padding-top: calc(clamp(2.5rem, 6vw, 4rem) + 76px); }
+/* De balk is doorzichtig boven de hero en wordt pas vast zodra je scrolt. */
+.balk-vast {
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: blur(14px);
+  border-bottom-color: var(--lijn);
+  box-shadow: 0 10px 30px -22px rgba(16, 48, 92, .5);
+}
+.balk-in { display: flex; align-items: center; gap: 1.5rem; padding: .8rem 0; }
+.balk-logo { display: block; margin-right: auto; line-height: 0; }
+
+.balk-nav { display: flex; gap: 1.6rem; font-size: .95rem; font-weight: 600; }
+.balk-nav a { text-decoration: none; opacity: .85; position: relative; padding-bottom: 3px; }
+.balk-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px; background: var(--vuur); transition: right .25s ease; }
+.balk-nav a:hover::after { right: 0; }
+.balk-nav a:hover { opacity: 1; color: var(--vuur); }
+@media (max-width: 860px) { .balk-nav { display: none; } }
+
+/* ---- hero ---- */
+.hero { position: relative; color: #fff; overflow: hidden; }
+.hero-foto { position: absolute; inset: 0; }
+.hero-foto img { width: 100%; height: 100%; object-fit: cover; }
+.hero-waas {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(16,31,61,.93) 8%, rgba(16,31,61,.7) 48%, rgba(16,31,61,.3) 100%);
+}
+/* Het verloop is rechtsboven bijna weg, en juist daar staat het menu. Zonder
+   deze strook staat witte navigatietekst op een lichte lucht. */
+.hero::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 190px; z-index: 1;
+  background: linear-gradient(180deg, rgba(16,31,61,.85) 0%, rgba(16,31,61,.45) 55%, rgba(16,31,61,0) 100%);
+  pointer-events: none;
+}
+.hero .omhulsel { position: relative; z-index: 2; }
+.hero-in { position: relative; padding: clamp(4.5rem, 13vw, 8.5rem) 0 clamp(3.5rem, 9vw, 6rem); max-width: 720px; }
+.hero-in p { font-size: clamp(1.05rem, 2.2vw, 1.3rem); opacity: .92; max-width: 34em; }
+.hero-knoppen { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: 2rem; }
+.hero-feiten { display: flex; flex-wrap: wrap; gap: 2.4rem; margin-top: 3rem; }
+.hero-feiten b { display: block; font-size: 1.7rem; letter-spacing: -.02em; }
+.hero-feiten span { font-size: .88rem; opacity: .75; }
+
+/* ---- rasters ---- */
+.raster { display: grid; gap: 1.4rem; }
+/* Vaste kolommen in plaats van auto-fit: met auto-fit worden twee kaarten in
+   een rij van drie over de volle breedte uitgerekt, en dan staat de ene
+   categorie er anders bij dan de andere. */
+.raster-3 { grid-template-columns: repeat(3, 1fr); }
+.raster-2 { grid-template-columns: repeat(2, 1fr); }
+.raster-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1180px) { .raster-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1000px) { .raster-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) {
+  .raster-4, .raster-3, .raster-2 { grid-template-columns: 1fr; }
+}
+/* Een grid-cel krimpt standaard niet onder de breedte van zijn inhoud. Staat
+   er een horizontale rail in, dan duwt die de hele kolom breder dan het
+   scherm. Vandaar min-width: 0. */
+.raster > * { min-width: 0; }
+
+.kaart {
+  background: var(--wit); border: 1px solid var(--lijn);
+  border-radius: var(--rond); padding: 2rem; box-shadow: var(--schaduw);
+}
+.kaart-foto { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+/* Vast vak met fill: zo bepaalt de plek de uitsnede, niet de verhouding
+   waarin de foto toevallig is aangeleverd. */
+.kaart-vak { position: relative; aspect-ratio: 3/2; }
+.kaart-vak img { object-fit: cover; }
+.kaart-foto .kaart-tekst { padding: 1.5rem 1.7rem 1.9rem; }
+
+/* ---- prijzen ---- */
+.prijs { text-align: left; display: flex; flex-direction: column; }
+.prijs.top { border: 2px solid var(--vuur); }
+.prijs-bedrag { font-size: 3.4rem; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.prijs-bedrag sup { font-size: 1.4rem; vertical-align: super; margin-right: .12em; }
+.prijs ul { list-style: none; padding: 0; margin: 1.4rem 0 2rem; }
+.prijs li { padding-left: 1.7rem; position: relative; margin-bottom: .6rem; }
+.prijs li::before { content: ''; position: absolute; left: 0; top: .55em; width: .7rem; height: .7rem; border-radius: 50%; background: var(--vuur); }
+
+/* ---- galerij ---- */
+/* Vaste vakken met object-fit: de foto's hebben verschillende verhoudingen
+   (1600x1000 naast 1000x1000); zonder vak wordt het raster een mozaiek. */
+.galerij { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+.galerij-vak { position: relative; aspect-ratio: 1; border-radius: var(--rond-klein); overflow: hidden; }
+.galerij-vak img { object-fit: cover; }
+@media (max-width: 760px) {
+  /* Zes foto's in twee kolommen is drie schermen scrollen; als rail is het er
+     één, en je ziet nog steeds dat er meer is. */
+  .galerij {
+    display: flex; gap: .8rem; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding-bottom: 1rem; max-width: 100%;
+  }
+  .galerij::-webkit-scrollbar { display: none; }
+  .galerij-vak { flex: 0 0 62%; scroll-snap-align: start; }
+}
+
+/* ---- formulier ---- */
+.formulier { display: grid; gap: .9rem; }
+.formulier label { font-weight: 600; font-size: .9rem; }
+.formulier input, .formulier textarea {
+  width: 100%; padding: .9rem 1.1rem; font: inherit;
+  border: 1px solid var(--lijn); border-radius: var(--rond-klein);
+  background: var(--wit); color: inherit;
+}
+.formulier input:focus, .formulier textarea:focus { outline: 2px solid var(--vuur); border-color: transparent; }
+
+/* ---- voet ---- */
+.voet { background: var(--nacht); color: #b9c3d2; padding: clamp(3rem, 7vw, 4.5rem) 0 2rem; }
+.voet a { color: #dbe3ee; text-decoration: none; }
+.voet a.knop-vuur { color: #10240f; }
+.voet a:hover { color: var(--vuur); }
+.voet h3 { color: #fff; font-size: 1rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1rem; }
+.voet-raster {
+  display: grid; gap: 2.5rem;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+}
+@media (max-width: 980px) { .voet-raster { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .voet-raster { grid-template-columns: 1fr; } }
+
+.voet-logo { display: block; margin-bottom: 1.4rem; }
+.voet-merk p { font-size: .95rem; max-width: 30ch; }
+
+/* Socials met naam erbij: een los rondje zegt minder dan een knop waar
+   'Instagram' op staat, en de merkkleur maakt het meteen herkenbaar. */
+.voet-volg { margin: 1.6rem 0 .7rem; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: #8896ab; }
+.voet-socials { display: flex; flex-wrap: wrap; gap: .55rem; }
+.voet-socials a {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .6rem .95rem; border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, .18); color: #dbe3ee;
+  font-size: .88rem; font-weight: 700;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.voet-socials a:hover { transform: translateY(-2px); color: #fff; }
+.voet-socials .soc-fb:hover { background: #1877f2; border-color: #1877f2; }
+.voet-socials .soc-ig:hover { background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888); border-color: transparent; }
+.voet-socials .soc-wa:hover { background: #25d366; border-color: #25d366; color: #06331a; }
+@media (max-width: 400px) { .voet-socials a span { display: none; } .voet-socials a { padding: .6rem; } }
+
+.voet-lijst { list-style: none; padding: 0; margin: 0; }
+.voet-lijst li { margin-bottom: .55rem; font-size: .95rem; }
+.voet-contact li { display: flex; gap: .7rem; align-items: flex-start; }
+.voet-contact svg { flex: none; margin-top: .18rem; color: var(--vuur); }
+
+.voet-onder {
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.13);
+  font-size: .85rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;
+}
+
+/* ---- zwevende whatsapp ---- */
+.zweef {
+  position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 60;
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: #25d366; color: #fff; font-weight: 700; text-decoration: none;
+  padding: .85rem 1.3rem; border-radius: 100px;
+  box-shadow: 0 12px 30px -8px rgba(0,0,0,.45);
+}
+
+/* ---- tekstpagina ---- */
+.tekstblok { max-width: 46rem; }
+.tekstblok p { font-size: 1.06rem; color: #3c4655; }
+
+/* ---- trainers ---- */
+.trainer { display: flex; gap: 1.3rem; align-items: flex-start; margin-bottom: 2rem; }
+.trainer-foto { width: 120px; height: 150px; object-fit: cover; object-position: top; border-radius: var(--rond-klein); flex: none; }
+@media (max-width: 520px) { .trainer { flex-direction: column; } .trainer-foto { width: 100%; height: 220px; } }
+
+/* ---- sportwagen ---- */
+.sportwagen { background: var(--nacht); color: #dde4ee; }
+.sportwagen h2 { color: #fff; }
+.sportwagen .tekstblok p { color: #b4c0d2; }
+
+/* ---- vinkjes en vergoedingsblok ---- */
+.vinkjes { list-style: none; padding: 0; margin: 1.4rem 0; }
+.vinkjes li { padding-left: 2rem; position: relative; margin-bottom: .55rem; font-weight: 600; }
+.vinkjes li::before {
+  content: '✓'; position: absolute; left: 0; top: -.05em;
+  width: 1.4rem; height: 1.4rem; border-radius: 50%;
+  background: var(--vuur); color: #10240f;
+  display: grid; place-items: center; font-size: .82rem; font-weight: 800;
+}
+.vergoed {
+  background: rgba(150, 184, 28, .14);
+  border-left: 4px solid var(--vuur);
+  border-radius: var(--rond-klein);
+  padding: 1.1rem 1.3rem; margin: 1.4rem 0;
+}
+
+/* ---- mobiele actiebalk ---- */
+.mobielbalk { display: none; }
+@media (max-width: 860px) {
+  /* Op de telefoon vervangt de balk de zwevende bel; twee zwevende dingen
+     over elkaar heen is precies wat de oude site deed. */
+  .zweef { display: none; }
+  .mobielbalk {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    display: flex; gap: .6rem; align-items: center;
+    padding: .7rem .9rem calc(.7rem + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--lijn);
+  }
+  .mobielbalk-klein {
+    flex: none; width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center; text-decoration: none;
+    background: var(--zand); color: var(--inkt); border: 1px solid var(--lijn);
+  }
+  .mobielbalk-klein.wa { background: #25d366; color: #fff; border-color: transparent; }
+  .mobielbalk-groot {
+    flex: 1; text-align: center; text-decoration: none;
+    background: var(--vuur); color: #10240f; font-weight: 800;
+    padding: .95rem 1rem; border-radius: 100px;
+  }
+  /* ruimte zodat de balk de voettekst niet afdekt */
+  body { padding-bottom: 76px; }
+}
+
+/* ---- brede beeldvakken ---- */
+.beeldvak { position: relative; border-radius: var(--rond); overflow: hidden; }
+.beeldvak img { object-fit: cover; }
+.beeldvak-breed { aspect-ratio: 3/2; }
+.beeldvak-staand { aspect-ratio: 4/5; }
+
+/* ---- opkomen bij scrollen ---- */
+.verschijnt { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,.8,.3,1); }
+.verschijnt.in-beeld { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .verschijnt { opacity: 1; transform: none; transition: none; } }
+
+/* ---- reviews ----
+   Witte kaarten op het donkerblauw: donker-op-donker oogde dof, en een
+   aanbeveling moet er juist uit springen. */
+.reviews { background: var(--nacht); color: #dde4ee; overflow: hidden; }
+.reviews h2 { color: #fff; }
+.reviews-kop { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+.reviews-kop h2 { margin-bottom: 0; }
+
+.railknoppen { display: flex; gap: .6rem; flex: none; }
+.railknoppen button {
+  width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+  background: transparent; color: #fff; font-size: 1.5rem; line-height: 1;
+  border: 1px solid rgba(255, 255, 255, .3);
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.railknoppen button:hover { background: var(--vuur); border-color: var(--vuur); color: #10240f; }
+
+/* uitgelicht verhaal */
+.topreview {
+  display: grid; grid-template-columns: .8fr 1.2fr; margin: 2.6rem 0 1.8rem;
+  background: var(--wit); color: var(--inkt);
+  border-radius: var(--rond); overflow: hidden;
+  box-shadow: 0 30px 70px -34px rgba(0, 0, 0, .7);
+}
+.topreview-foto { position: relative; min-height: 260px; }
+.topreview-foto img { object-fit: cover; }
+.topreview-in { padding: clamp(1.8rem, 4vw, 2.8rem); display: flex; flex-direction: column; }
+.topreview blockquote {
+  margin: 1rem 0 1.6rem; font-size: clamp(1.1rem, 2vw, 1.42rem);
+  line-height: 1.5; font-weight: 600; letter-spacing: -.01em;
+}
+.topreview figcaption { margin-top: auto; }
+@media (max-width: 820px) { .topreview { grid-template-columns: 1fr; } .topreview-foto { min-height: 200px; } }
+
+/* rail met de overige ervaringen */
+.rail {
+  display: flex; gap: 1.25rem; align-items: stretch; margin-top: .4rem;
+  padding: .4rem max(1.25rem, calc((100% - 1180px) / 2)) 1.6rem;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail { margin-top: 2.2rem; gap: 1rem; scroll-padding-inline: max(1.25rem, calc((100% - 1180px) / 2)); }
+.review {
+  position: relative; overflow: hidden;
+  flex: 0 0 min(330px, 80vw); scroll-snap-align: start; margin: 0;
+  display: flex; flex-direction: column; gap: .8rem;
+  background: var(--wit); color: var(--inkt);
+  border-radius: var(--rond); padding: 1.4rem 1.4rem 1.5rem;
+  box-shadow: 0 18px 40px -28px rgba(0, 0, 0, .7);
+}
+/* groot aanhalingsteken als beeldmerk rechtsboven */
+.review::after {
+  content: '\201D'; position: absolute; top: -.6rem; right: 1rem;
+  font-size: 6rem; line-height: 1; font-weight: 800; color: rgba(150, 184, 28, .22);
+  pointer-events: none;
+}
+.review blockquote { margin: 0; font-size: 1rem; line-height: 1.6; color: #3c4655; }
+.review figcaption { position: relative; z-index: 1; }
+
+.sterren { display: flex; gap: 2px; }
+.sterren svg { width: 18px; height: 18px; fill: #f5b301; }
+
+figcaption { display: flex; align-items: center; gap: .8rem; }
+figcaption .bol {
+  flex: none; width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--vuur); color: #10240f;
+  font-weight: 800; font-size: .92rem; letter-spacing: .02em;
+}
+figcaption strong { display: block; font-size: .96rem; }
+figcaption em { font-style: normal; font-size: .84rem; color: var(--grijs); }
+
+.reviews-voet { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-top: .6rem; }
+.bolletjes { display: flex; gap: .45rem; }
+.bolletjes span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.28); transition: background .2s ease, width .2s ease; }
+.bolletjes .aan { background: var(--vuur); width: 22px; border-radius: 4px; }
+
+/* ---- rooster ---- */
+/* Virtuagym toont zeven dagkolommen naast elkaar; onder de 760px wordt dat
+   onleesbaar smal, dus laten we de weekweergave zelf horizontaal schuiven. */
+.rooster-schuif { overflow-x: auto; border-radius: var(--rond); background: var(--wit); -webkit-overflow-scrolling: touch; }
+.rooster iframe { display: block; width: 100%; min-width: 760px; height: 1000px; border: 0; }
+.rooster-hulp { margin-top: 1rem; color: var(--grijs); font-size: .95rem; }
+
+/* De kaarten staan in een raster; het opkom-omhulsel mag de cel vullen. */
+.raster > .verschijnt { display: flex; }
+.raster > .verschijnt > * { width: 100%; }
+
+/* =======================================================================
+   Schuine vlakken. Het logo heeft een schuine slash en een schuine balk,
+   de flyer heeft diagonale kleurvlakken. Elke sectiegrens volgt diezelfde
+   hoek, zodat de site en zijn drukwerk uit dezelfde koker komen.
+   ======================================================================= */
+.schuin-onder { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3.5vw), 0 100%); }
+.schuin-boven { clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%); margin-top: -3.5vw; }
+.schuin-beide { clip-path: polygon(0 3.5vw, 100% 0, 100% calc(100% - 3.5vw), 0 100%); margin-block: -1.5vw; }
+/* Twee donkere vlakken achter elkaar: alleen bovenlangs snijden, anders
+   ontstaat er een lichte wig tussen twee blokken van dezelfde kleur. */
+.schuin-boven-alleen { clip-path: polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%); margin-top: -3.5vw; position: relative; z-index: 1; }
+.schuin-boven, .schuin-beide { position: relative; z-index: 1; }
+
+/* streep in de huisstijl: schuine limoenen balk achter een kop */
+.streep { position: relative; display: inline-block; }
+.streep::after {
+  content: ''; position: absolute; left: -.12em; right: -.3em; bottom: -.02em; height: .2em;
+  background: var(--vuur); transform: skewX(-14deg); z-index: -1;
+}
+
+/* ---- feitenband ---- */
+.band {
+  background: var(--zand); color: var(--inkt);
+  padding: clamp(1.4rem, 3.5vw, 2.2rem) 0;
+}
+/* Vier compacte vakjes met een icoon in plaats van één massief groen vlak. */
+.band-in { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.band-vak {
+  display: flex; align-items: center; gap: .85rem;
+  background: var(--wit); border: 1px solid var(--lijn);
+  border-radius: var(--rond-klein); padding: .95rem 1.1rem;
+}
+.band-icoon {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(150, 184, 28, .16); color: var(--vuur-tekst);
+}
+.band-icoon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.band-tekst { display: flex; flex-direction: column; min-width: 0; }
+.band b { display: block; font-size: clamp(1.45rem, 2.6vw, 1.9rem); font-weight: 800; font-style: italic; line-height: 1.05; letter-spacing: -.03em; }
+.band-tekst span { font-size: .95rem; font-weight: 600; color: var(--grijs); line-height: 1.3; }
+@media (max-width: 900px) { .band-in { grid-template-columns: 1fr 1fr; gap: .7rem; } }
+@media (max-width: 760px) {
+  .band-vak { padding: .75rem .8rem; gap: .65rem; }
+  .band-icoon { width: 38px; height: 38px; }
+  .band-icoon svg { width: 19px; height: 19px; }
+  .band b { font-size: 1.45rem; }
+  .band-tekst span { font-size: .9rem; }
+}
+
+/* ---- productkaarten ---- */
+.kaart-foto { transition: transform .25s ease, box-shadow .25s ease; }
+.kaart-foto:hover { transform: translateY(-6px); box-shadow: 0 26px 60px -26px rgba(16, 48, 92, .55); }
+.kaart-vak { overflow: hidden; }
+.kaart-vak img { transition: transform .5s cubic-bezier(.2,.7,.3,1); }
+.kaart-foto:hover .kaart-vak img { transform: scale(1.05); }
+/* schuine hoek waar de foto in de tekst overloopt */
+.kaart-vak::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2.4rem;
+  background: var(--wit); clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.kaart-merk {
+  position: absolute; left: 1rem; top: 1rem; z-index: 2;
+  background: var(--vuur); color: #10240f;
+  font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  padding: .4rem .8rem; transform: skewX(-12deg);
+}
+.kaart-merk span { display: block; transform: skewX(12deg); }
+.kaart-lijst { list-style: none; padding: 0; margin: .9rem 0 0; }
+.kaart-lijst li {
+  position: relative; padding-left: 1.5rem; margin-bottom: .4rem;
+  font-size: .95rem; color: var(--grijs);
+}
+.kaart-lijst li::before {
+  content: ''; position: absolute; left: 0; top: .52em;
+  width: .62rem; height: .62rem; background: var(--vuur); transform: skewX(-12deg);
+}
+.kaart-meer { margin-top: 1.2rem; font-weight: 700; color: var(--inkt); font-size: .95rem; display: inline-flex; gap: .4rem; }
+.kaart-foto:hover .kaart-meer { color: var(--vuur-diep); }
+
+/* ---- logo in de balk ---- */
+
+@media (max-width: 520px) { .balk-logo .merk-logo { height: 40px !important; } }
+
+.knop-klein { padding: .7rem 1.3rem; font-size: .92rem; }
+/* De doorzichtige balk staat op de donkere hero, dus daar witte letters. */
+.balk:not(.balk-vast) .balk-nav a { color: #fff; }
+
+
+/* ---- sfeervideo ---- */
+.videovak { position: relative; overflow: hidden; }
+.sfeervideo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-blok { position: relative; min-height: clamp(420px, 60vh, 640px); display: grid; }
+.video-blok > .videovak { position: absolute; inset: 0; }
+.video-blok-in {
+  position: relative; z-index: 2; align-self: end;
+  padding: clamp(2rem, 6vw, 4rem) 0;
+  color: #fff; max-width: 620px;
+}
+.video-waas { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(16,31,61,.15) 0%, rgba(16,31,61,.85) 78%); }
+
+/* ---- plaatsen in de buurt ---- */
+.plaatsen { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .4rem; }
+.plaatsen a {
+  text-decoration: none; font-weight: 600; font-size: .9rem;
+  padding: .45rem .9rem; border: 1px solid var(--lijn); border-radius: 100px;
+  background: var(--wit); transition: border-color .2s ease, color .2s ease;
+}
+.plaatsen a:hover { border-color: var(--vuur); color: var(--vuur-tekst); }
+.kaart-merk-vast { position: static; align-self: flex-start; margin-bottom: .8rem; }
+
+/* ---- hamburger en uitklapmenu ---- */
+.hamburger {
+  display: none; flex: none; width: 44px; height: 44px; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  flex-direction: column; gap: 5px; align-items: center; justify-content: center;
+}
+.hamburger span {
+  display: block; width: 24px; height: 2px; background: currentColor; border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease;
+}
+.hamburger .kruis:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger .kruis:nth-child(2) { opacity: 0; }
+.hamburger .kruis:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.uitklap { display: none; }
+@media (max-width: 860px) {
+  .hamburger { display: flex; }
+  .balk-knop { display: none; }
+  .balk:not(.balk-vast) .hamburger { color: #fff; }
+  .uitklap {
+    display: block; background: var(--wit);
+    border-top: 1px solid var(--lijn);
+    max-height: calc(100dvh - 68px); overflow-y: auto;
+    padding: 1rem max(1.25rem, calc((100% - 1180px) / 2)) 2rem;
+  }
+  /* display:block hierboven won van het hidden-attribuut, waardoor het menu
+     op mobiel altijd openstond. */
+  .uitklap[hidden] { display: none; }
+  .uitklap nav { display: flex; flex-direction: column; }
+  .uitklap nav a {
+    text-decoration: none; font-weight: 700; font-size: 1.15rem;
+    padding: .85rem 0; border-bottom: 1px solid var(--lijn);
+  }
+  .uitklap-onder { margin-top: 1.4rem; }
+  .uitklap-onder .knop { width: 100%; justify-content: center; }
+  .uitklap-onder p { margin-top: 1.2rem; color: var(--grijs); font-size: .95rem; line-height: 1.9; }
+
+}
+
+/* ---- webshop ---- */
+.snelnaar { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+.snelnaar a {
+  text-decoration: none; font-weight: 700; font-size: .92rem;
+  padding: .6rem 1.1rem; border-radius: 100px;
+  background: var(--wit); border: 1px solid var(--lijn);
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.snelnaar a:hover { background: var(--vuur); border-color: var(--vuur); color: #10240f; }
+
+.product { display: flex; flex-direction: column; }
+.product-vak { aspect-ratio: 16/10; }
+/* Prijs als schuin label op de foto, in de vormtaal van het logo. */
+.product-badge {
+  position: absolute; right: 0; bottom: 1.9rem; z-index: 2;
+  background: var(--vuur); color: #10240f;
+  font-size: 1.35rem; font-weight: 800; font-style: italic; letter-spacing: -.03em;
+  padding: .35rem 1rem .35rem 1.2rem; transform: skewX(-12deg);
+}
+.product-badge sup { font-size: .7rem; vertical-align: super; margin-right: .1em; }
+.product .kaart-tekst { display: flex; flex-direction: column; flex: 1; }
+.product h3 { font-size: 1.06rem; margin-bottom: .4rem; }
+.product p { color: var(--grijs); font-size: .94rem; margin: 0 0 1.3rem; }
+.product .knop { margin-top: auto; align-self: flex-start; }
+
+/* ---- landingspagina ---- */
+.hero-kort .hero-in { padding-block: clamp(6rem, 12vw, 8rem) clamp(2.5rem, 6vw, 4rem); }
+.hero-kort h1 { font-size: clamp(1.9rem, 4.6vw, 3.2rem); }
+.sectieblok { margin-bottom: 1.8rem; }
+.sectieblok h2 { margin-top: 2rem; }
+.sectieblok h3 { margin-top: 1.6rem; font-size: 1.15rem; }
+.zijkolom { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 92px; }
+.zijkaart .kaart-lijst li { padding-left: 1.5rem; font-size: 1rem; }
+.zijkaart .kaart-lijst a { text-decoration: none; font-weight: 600; }
+.zijkaart .kaart-lijst a:hover { color: var(--vuur-tekst); }
+@media (max-width: 900px) { .zijkolom { position: static; } }
+
+/* ---- koppen binnen kaarten ----
+   De globale h2 is een schuine kapitaal van 3rem; in een kaart loopt die
+   buiten het vak. Binnen een kaart telt de plek, niet het kopniveau. */
+.kaart h2,
+.kaart-tekst h2 {
+  font-size: 1.22rem; font-style: normal; text-transform: none;
+  letter-spacing: -.02em; margin: 0 0 .4rem;
+}
+.kaart-foto { text-decoration: none; color: inherit; }
+.kaart-foto:hover h2,
+.kaart-foto:hover h3 { color: var(--vuur-tekst); }
+
+/* ---- woordmerk ----
+   Opgebouwd uit tekst zodat het scherp blijft en de kleur van zijn omgeving
+   kan overnemen. Maatvoering hangt aan --merk-hoogte. */
+.merk {
+  --h: var(--merk-hoogte, 40px);
+  display: inline-flex; align-items: center; gap: calc(var(--h) * .12);
+  position: relative; line-height: 1; white-space: nowrap;
+}
+.merk-streep {
+  width: calc(var(--h) * .09); height: calc(var(--h) * 1.05);
+  background: var(--inkt); transform: skewX(-14deg); border-radius: 1px;
+}
+.merk-woord { position: relative; display: inline-flex; flex-direction: column; }
+.merk-fit,
+.merk-studio {
+  font-weight: 800; font-style: italic; letter-spacing: -.04em;
+  font-size: calc(var(--h) * .68);
+}
+.merk-fit { color: var(--inkt); }
+.merk-studio { color: var(--vuur); }
+.merk-woord { flex-direction: row; align-items: baseline; }
+.merk-sayan {
+  position: absolute; right: calc(var(--h) * -.06); top: calc(var(--h) * -.42);
+  font-family: Caveat, 'Segoe Script', cursive;
+  font-size: calc(var(--h) * .58); font-weight: 700;
+  color: var(--inkt); transform: rotate(-4deg);
+}
+.merk-balk {
+  position: absolute; left: calc(var(--h) * .34); right: calc(var(--h) * -.1);
+  bottom: calc(var(--h) * -.17); height: calc(var(--h) * .13);
+  background: var(--inkt); clip-path: polygon(0 0, 100% 42%, 100% 100%, 0 100%);
+}
+.merk-licht .merk-fit,
+.merk-licht .merk-sayan { color: #fff; }
+.merk-licht .merk-streep,
+.merk-licht .merk-balk { background: #fff; }
+
+/* ---- afsluitend blok ---- */
+.slot { background: var(--zand); }
+.slot-in {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2.5rem; flex-wrap: wrap;
+  background: var(--wit); border: 1px solid var(--lijn);
+  border-radius: var(--rond); padding: clamp(1.8rem, 4vw, 3rem);
+  box-shadow: var(--schaduw);
+}
+.slot-in h2 { margin-bottom: .4rem; }
+.slot-in p { margin: 0; color: var(--grijs); max-width: 34rem; }
+.slot-knoppen { display: flex; flex-wrap: wrap; gap: .8rem; }
+
+/* ---- personal training tarieven ---- */
+.pt-raster { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 2rem; }
+.pt-kaart {
+  display: flex; flex-direction: column; gap: .3rem;
+  background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: var(--rond); padding: 1.5rem;
+  transition: border-color .25s ease, transform .25s ease;
+}
+.pt-kaart:hover { border-color: var(--vuur); transform: translateY(-4px); }
+.pt-naam { font-weight: 700; color: #fff; }
+.pt-prijs { font-size: 2.3rem; font-weight: 800; font-style: italic; letter-spacing: -.03em; color: var(--vuur); line-height: 1.1; }
+.pt-prijs sup { font-size: .95rem; vertical-align: super; margin-right: .08em; }
+.pt-eenheid { font-size: .88rem; color: #93a1b8; }
+
+/* ---- veelgestelde vragen ---- */
+.vragen { margin-top: 1.4rem; }
+.vragen details {
+  border-bottom: 1px solid var(--lijn); padding: .2rem 0;
+}
+.vragen summary {
+  cursor: pointer; list-style: none; padding: 1rem 2rem 1rem 0;
+  font-weight: 700; position: relative;
+}
+.vragen summary::-webkit-details-marker { display: none; }
+.vragen summary::after {
+  content: '+'; position: absolute; right: .2rem; top: .85rem;
+  font-size: 1.4rem; font-weight: 700; color: var(--vuur); line-height: 1;
+  transition: transform .2s ease;
+}
+.vragen details[open] summary::after { transform: rotate(45deg); }
+.vragen details p { margin: 0 0 1.1rem; color: var(--grijs); }
+
+/* ---- teamkaarten ---- */
+.teamkaart { display: flex; flex-direction: column; }
+/* Portret-uitsnede: de foto's zijn staand genomen, een breed vak snijdt
+   iemands hoofd eraf. */
+.teamvak { aspect-ratio: 4/5; }
+.teamvak img { object-position: top center; }
+.teamrol { display: block; color: var(--vuur-tekst); font-weight: 700; font-size: .9rem; margin-bottom: .7rem; }
+.teamkaart p { color: var(--grijs); margin: 0; font-size: .96rem; }
+
+/* =======================================================================
+   Schuin afgesneden beeld. Dezelfde hoek als de slash in het logo, zodat
+   foto's meedoen in de vormtaal in plaats van rechthoekige blokken te zijn.
+   ======================================================================= */
+.beeldvak-schuin { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.6rem), 0 100%); }
+.beeldvak-schuin-om { clip-path: polygon(0 2.6rem, 100% 0, 100% 100%, 0 100%); }
+/* diagonaal aan een zijkant, voor beeld naast tekst */
+.beeldvak-zij { clip-path: polygon(2.2rem 0, 100% 0, 100% 100%, 0 100%); }
+@media (max-width: 760px) { .beeldvak-zij { clip-path: none; } }
+
+/* accentblok achter een foto: geeft diepte zonder extra beeld */
+.beeld-stapel { position: relative; }
+.beeld-stapel::before {
+  content: ''; position: absolute; inset: auto -1.1rem -1.1rem auto;
+  width: 62%; height: 62%; background: var(--vuur); border-radius: var(--rond);
+  transform: skewY(-2deg); z-index: 0;
+}
+.beeld-stapel > * { position: relative; z-index: 1; }
+
+/* ---- mobiel: rasters worden rails ----
+   Acht kaarten onder elkaar maakt een telefoonpagina eindeloos. Onder de
+   760px schuiven ze horizontaal, met een duidelijke aanzet dat er meer is. */
+@media (max-width: 760px) {
+  .raster-schuif {
+    display: flex; gap: 1rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin-inline: calc(max(1.25rem, (100vw - 1180px) / 2) * -1);
+    padding-inline: max(1.25rem, calc((100vw - 1180px) / 2));
+    padding-bottom: 1.2rem;
+  }
+  .raster-schuif::-webkit-scrollbar { display: none; }
+  .raster-schuif > * { flex: 0 0 76%; scroll-snap-align: start; }
+  .schuifhint { display: block; }
+
+  /* Vegen moet altijd werken: zachte snap, de rand als snappunt en kaarten
+     buiten beeld meteen zichtbaar (ze wachtten anders op de opkom-animatie). */
+  .raster-schuif, .rail, .trainers-rij {
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+  }
+  .raster-schuif { scroll-padding-inline: max(1.25rem, calc((100vw - 1180px) / 2)); }
+  .rail { scroll-padding-inline: 1.25rem; }
+  .raster-schuif .verschijnt { opacity: 1; transform: none; }
+
+  /* Kleinere aanbodkaarten: lagere foto, minder tekst. */
+  #aanbod .kaart-vak { aspect-ratio: 16 / 10; }
+  #aanbod .kaart-foto .kaart-tekst { padding: 1rem 1.1rem 1.2rem; }
+  #aanbod .kaart-tekst h3 { font-size: 1.12rem; margin-bottom: .35rem; }
+  #aanbod .kaart-tekst p { font-size: .93rem; line-height: 1.5; }
+  #aanbod .kaart-lijst { display: none; }
+  #aanbod .kaart-meer { margin-top: .7rem; font-size: .9rem; }
+  #aanbod .raster-schuif { margin-top: 1.8rem !important; }
+
+  .review { flex-basis: 80vw; padding: 1.2rem 1.2rem 1.3rem; }
+  .review blockquote { font-size: .97rem; }
+  .reviews-kop .railknoppen { display: none; }
+}
+.schuifhint { display: none; font-size: .85rem; color: var(--grijs); margin-top: .2rem; }
+
+/* ---- tarieven: uitleg ---- */
+.prijs-voorwie {
+  margin: 1rem 0 .2rem; font-size: .93rem; font-weight: 700;
+  color: var(--vuur-tekst); line-height: 1.4;
+}
+.prijs-kopje {
+  display: block; margin-top: 1.1rem; font-size: .74rem; font-weight: 800;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--grijs);
+}
+.prijs ul { margin-top: .7rem; }
+
+.inbegrepen { position: relative; padding-top: 2.6rem; }
+.inbegrepen-nr {
+  position: absolute; top: 1.4rem; left: 2rem;
+  font-size: 2.6rem; font-weight: 800; font-style: italic;
+  color: var(--vuur); opacity: .3; line-height: 1; letter-spacing: -.04em;
+}
+.inbegrepen h3 { position: relative; margin-bottom: .5rem; }
+.inbegrepen p { color: var(--grijs); margin: 0; font-size: .96rem; }
+
+@media (max-width: 900px) {
+  .zijkaart { display: none; }
+}
+
+/* ---- inklappen op mobiel ---- */
+.inklap-knop { display: none; }
+@media (max-width: 900px) {
+  .inklap {
+    max-height: 0; overflow: hidden;
+    transition: max-height .45s ease;
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+    mask-image: linear-gradient(180deg, #000 60%, transparent);
+  }
+  .inklap-open {
+    max-height: 400vh;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .inklap-knop { display: inline-flex; margin: 1.2rem 0 .4rem; }
+}
+
+@media (max-width: 760px) {
+  /* Drie teamleden onder elkaar is anderhalf scherm; als rail past het in een
+     halve. */
+  /* Deze rail staat in een rasterkolom, niet over de volle breedte. Negatieve
+     marges duwen hem dan buiten de pagina; vandaar geen uitloop hier. */
+  .trainers-rij {
+    display: flex; gap: 1rem; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding-bottom: 1rem; max-width: 100%;
+  }
+  .trainers-rij::-webkit-scrollbar { display: none; }
+  .trainers-rij .trainer {
+    flex: 0 0 84%; scroll-snap-align: start; margin-bottom: 0;
+    flex-direction: row; align-items: flex-start;
+    background: var(--wit); border: 1px solid var(--lijn);
+    border-radius: var(--rond); padding: 1.2rem;
+  }
+  .trainers-rij .trainer-foto { width: 64px; height: 80px; }
+  .trainers-rij .trainer { flex-basis: 80%; padding: 1rem; gap: .9rem; }
+  .trainers-rij .trainer h3 { font-size: 1.05rem; }
+  .trainer-tekst p {
+    font-size: .92rem; line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+}

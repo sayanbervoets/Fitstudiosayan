@@ -1,0 +1,6 @@
+node_modules
+.next
+.vercel
+data/oude-site*.json
+data/webshop-ruw.json
+.env*
