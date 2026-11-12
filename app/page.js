@@ -11,7 +11,7 @@ import Aanbod from './onderdelen/Aanbod';
 export const metadata = {
   title: 'Fitstudio Sayan Oudehaske — buiten fitness bij Heerenveen',
   description:
-    'Kleinschalige fitstudio in Oudehaske. Buiten trainen, bootcamp en personal training met echte begeleiding. Weer of geen weer: de training gaat door. Eerste les gratis.',
+    'Kleinschalige fitstudio in Oudehaske. Buiten trainen, bootcamp en personal training met echte begeleiding. Eerste les gratis.',
   alternates: { canonical: '/' },
 };
 

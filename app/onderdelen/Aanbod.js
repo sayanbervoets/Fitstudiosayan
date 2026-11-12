@@ -7,7 +7,7 @@ export const aanbod = [
     merk: 'Buiten',
     titel: 'Bootcamp en outdoor',
     tekst: 'Vier keer per week buiten, in een vaste groep. Regen hoort erbij.',
-    punten: ['Kleine groepen', 'Weer of geen weer', 'Elk niveau door elkaar'],
+    punten: ['Kleine groepen', 'In de buitenlucht', 'Elk niveau door elkaar'],
     foto: '/foto/groep-plein.webp',
     pad: '/buiten-fitness-friesland/',
   },
