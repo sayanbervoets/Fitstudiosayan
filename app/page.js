@@ -55,9 +55,9 @@ export default function Home() {
               Oudehaske · Heerenveen · Joure
             </span>
             <h1>
-              Weer of geen weer.
+              Start nu met sporten
               <br />
-              De training gaat door.
+              in Oudehaske.
             </h1>
             <p>
               Een kleinschalige studio waar de trainer je naam kent en weet wat je nodig hebt.
